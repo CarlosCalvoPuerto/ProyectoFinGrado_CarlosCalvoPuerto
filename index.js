@@ -61,7 +61,7 @@ const path = require('path');
     let nombreArchivo = "DatosRecomendado";
     var ws = wb.addWorksheet(nombreArchivo);
 
-    // Crear Stilos
+    // Estilos
     var estiloInicioColumna = wb.createStyle({
         font: {
             name: "Arial",
@@ -71,7 +71,6 @@ const path = require('path');
         },
         numberFormat: '$#,##0.00; ($#,##0.00); -',
     });
-    
     var estiloContenido = wb.createStyle({
         font: {
             name: "Arial",
@@ -108,13 +107,6 @@ const path = require('path');
     // Guardar Excel
     const pathExcel = path.join(__dirname, 'excel', nombreArchivo + '.xlsx')
     wb.write(pathExcel);
-
-    // TODO:
-    /*
-    // Mostrar Datos de Excel o DB
-    // Volcar datos en HTML 
-    */
-    // Fin TODO
 
     // Mostrar Datos
     console.log("Recomendados____________________________________________________________________________________");
@@ -154,20 +146,16 @@ const path = require('path');
     await page.waitForSelector(`[data-a-target="player-seekbar-duration"]`);
     await timeout(500);
     var timeEnd = await page.evaluate(() => document.querySelector('[data-a-target="player-seekbar-duration"]').innerText);
-    console.log("Time end: "+ timeEnd);
     var timeSplit = timeEnd.split(':');
-    var hora = timeSplit[0] * 3600;
-    var min = timeSplit[1] * 60;
-    var sec = timeSplit[2] * 1;
-    var timeMilisecs = (hora + min + sec) * 1000;
-
+    var timeMilisecs = (((timeSplit[0] * 3600) + timeSplit[1] * 60) + sec) * 1000;
+    console.log("Time end: "+ timeEnd);
     console.log("Time seconds: "+ timeMilisecs);
+
     await timeout(timeMilisecs);
+    // await timeout(300000);
     console.log("Fin directo");
     
-
     // Cerrar Programa
-    await timeout(5000);
     console.log("Cerrando Programa");
     await browser.close();
 
