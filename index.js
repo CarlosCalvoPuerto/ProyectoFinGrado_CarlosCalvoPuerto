@@ -147,7 +147,7 @@ const path = require('path');
     await timeout(500);
     var timeEnd = await page.evaluate(() => document.querySelector('[data-a-target="player-seekbar-duration"]').innerText);
     var timeSplit = timeEnd.split(':');
-    var timeMilisecs = (((timeSplit[0] * 3600) + timeSplit[1] * 60) + sec) * 1000;
+    var timeMilisecs = (((timeSplit[0] * 3600) + timeSplit[1] * 60) + timeSplit[2] * 1) * 1000;
     console.log("Time end: "+ timeEnd);
     console.log("Time seconds: "+ timeMilisecs);
 
